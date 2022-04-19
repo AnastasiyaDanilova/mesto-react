@@ -35,7 +35,6 @@
 @import url(./blocks/button/_type/button_type_submit.css);
 @import url(./blocks/button/_type/button_type_submit-inactive.css);
 @import url(./blocks/button/_type/button_type_submit-delete.css);
-@import url(./blocks/button/_type/button_type_saved.css);
 @import url(./blocks/popup/__input/popup__input.css);
 @import url(./blocks/popup/__input/_type/popup__input_type_error.css);
 @import url(./blocks/popup/__error/popup__error.css);
@@ -48,4 +47,3 @@
 @import url(./blocks/popup/_type/popup_type_image.css);
 @import url(./blocks/popup/__fig-caption/popup__fig-caption.css);
 @import url(./blocks/button/_type/button_type_avatar-submit.css);
-
