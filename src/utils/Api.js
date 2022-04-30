@@ -82,23 +82,14 @@ class Api {
         )
     }
 
-    // добавлние и удаление лайка
-    addLike(id) {
-        return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-            method: "PUT",
+    // проверка лайка, добавление и удаление
+    changeLikeCardStatus(id, isLiked) {
+        return fetch (`${this._baseUrl}/cards/${id}/likes`, {
+            method: isLiked? "PUT" : "DELETE",
             headers: this._headers
         }).then((res) =>
-            this._checkServerResponce(res)
-        )
-    }
-
-    deleteLike(id) {
-        return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-            method: "DELETE",
-            headers: this._headers
-        }).then((res) =>
-            this._checkServerResponce(res)
-        )
+        this._checkServerResponce(res)
+    )
     }
 }
 
