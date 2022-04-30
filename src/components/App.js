@@ -21,7 +21,10 @@ function App() {
     const [currentUser, setСurrentUser] = React.useState({});
     const [cards, setСards] = React.useState([]);
 
-    // попапы открытие, закрытие
+    const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard ;
+
+
+    // попапы открытие, закрытие, закрыти клик и оверлей
     function handleEditProfileClick() {
         setIsEditProfilePopupOpen(true);
     };
@@ -45,40 +48,69 @@ function App() {
         setSelectedCard({});
     };
 
+    React.useEffect(() => {
+      function closeByEscape(evt) {
+        if(evt.key === 'Escape') {
+          closeAllPopups();
+        }
+      }
+      if(isOpen) {
+        document.addEventListener('keydown', closeByEscape);
+        return () => {
+          document.removeEventListener('keydown', closeByEscape);
+        }
+      }
+    }, [isOpen]) 
+
+    React.useEffect(() => {
+        function closeByOverlay(evt) {
+          if(evt.target.classList.contains('popup')) {
+            closeAllPopups();
+          }
+        }
+        if(isOpen) {
+          document.addEventListener('mousedown', closeByOverlay);
+          return () => {
+            document.removeEventListener('mousedown', closeByOverlay);
+          }
+        }
+      }, [isOpen]) 
+  
+
     // редактирование: хук, профиль, аватар
     React.useEffect(() => {
         api.getProfile().then(res => {
             setСurrentUser(res);
-        }).catch(console.log);
+        }).catch((res) => console.log(res));
     }, []);
 
     function handleUpdateUser(user) {
         api.editProfile(user.name, user.about).then((res) => {
             setСurrentUser(res);
             closeAllPopups();
-        }).catch(console.log);
+        }).catch((res) => console.log(res));
     };
 
     function handleUpdateAvatar(user) {
         api.changeAvatar(user.avatar).then((res) => {
             setСurrentUser(res);
             closeAllPopups();
-        }).catch(console.log);
+        }).catch((res) => console.log(res));
     };
 
     //карточки: хук, добавление, лайк, удаление 
     React.useEffect(() => {
-        Promise.all([api.getInitialCards()])
-            .then(([cardList]) => {
-                setСards(cardList);
-            }).catch(console.log);
+        api.getInitialCards().then((cardList) => {
+            setСards(cardList);
+        }).catch((res) => console.log(res));
+        
     }, []);
 
     function handleAddPlaceSubmit(card) {
         api.addCard(card.name, card.link).then((newCard) => {
             setСards([newCard, ...cards]);
             closeAllPopups();
-        });
+        }).catch((res) => console.log(res));
     };
 
     function handleCardLike(card) {
@@ -86,13 +118,13 @@ function App() {
 
         api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
             setСards((state) => state.map((c) => c._id === card._id ? newCard : c));
-        }).catch(console.log);
+        }).catch((res) => console.log(res));
     };
 
     function handleCardDelete(card) {
         api.deleteCard(card._id).then(() => {
             setСards((state) => state.filter((c) => c._id !== card._id))
-        }).catch(console.log);
+        }).catch((res) => console.log(res));
     };
 
     return (

@@ -7,7 +7,7 @@ function PopupWithForm({ name, isOpen, title, onClose, buttonText, children, onS
                 <button type="button" aria-label="Закрыть" className="button button_type_close-popup" onClick={onClose}></button>
                 <h2 className="popup__title">{title}</h2>
 
-                <form className="popup__form" id={name} name={`popup-${name}-form`} onSubmit={onSubmit} noValidate>
+                <form className="popup__form" id={name} name={`popup-${name}-form`} onSubmit={onSubmit}>
                     {children}
                     <button type="submit" aria-label="Отправить" className="button button_type_submit">{buttonText}</button>
                 </form>
