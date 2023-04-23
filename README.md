@@ -39,5 +39,7 @@ Mesto - это сервис обмена фотографиями. Куда мо
     
 * Валидация всех форм
 
+**Где посмотреть**
+
 * [Ссылка на проект](https://mesto-react-eight.vercel.app/)
 ![mesto](https://user-images.githubusercontent.com/93146397/233844777-0ea1fbbb-bc56-42bd-8422-46ecedb14b2c.PNG)
